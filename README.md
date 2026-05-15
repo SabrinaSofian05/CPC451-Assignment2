@@ -84,6 +84,9 @@ Build the JAR file using Maven to package your Java classes:
 ```bash
 mvn clean package
 
+# Verify the JAR was created
+ls target/*.jar
+
 ```
 
 ### 5. Data Ingestion
@@ -97,6 +100,13 @@ wget https://www.gutenberg.org/files/11/11-0.txt -O assignment_data.txt
 # Upload to HDFS
 hdfs dfs -mkdir -p /assignment/input
 hdfs dfs -put assignment_data.txt /assignment/input/
+
+```
+**1. Create a Sample Input File**
+
+```bash
+nano input.txt
+# Paste your text, Save (Ctrl+O, Enter), and Exit (Ctrl+X)
 
 ```
 
@@ -207,53 +217,4 @@ When you run the "Most Frequent" command, you will likely see that common Englis
 
 
 
-
-
-
-
-### 5. Start Hadoop Services
-
-```bash
-start-dfs.sh
-start-yarn.sh
-jps
-
-```
-
-### 6. Preparation: Cleanup Before Running
-
-**CRITICAL:** Hadoop will throw an error if the output directory already exists. If you are rerunning the job after making changes to your code, you **must** delete the previous output folder:
-
-```bash
-# Delete the existing output directory in HDFS
-hdfs dfs -rm -r /assignment/output
-
-```
-
-### 7. Compile and Execute
-
-```bash
-# Build the JAR
-mvn clean package
-
-# Ingest data
-wget https://www.gutenberg.org/files/11/11-0.txt -O assignment_data.txt
-hdfs dfs -mkdir -p /assignment/input
-hdfs dfs -put assignment_data.txt /assignment/input/
-
-# Run the job
-hadoop jar target/word-count-1.0.jar com.assignment.WordCount /assignment/input /assignment/output
-
-```
-
-### 8. View and Analyze Results
-
-```bash
-# View formatted table
-hdfs dfs -cat /assignment/output/part-r-00000 | head -n 20
-
-# View top 10 most frequent words
-hdfs dfs -cat /assignment/output/part-r-00000 | sort -k3 -nr | head -n 10
-
-```
 
