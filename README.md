@@ -84,13 +84,58 @@ hadoop jar target/word-count-1.0.jar com.assignment.WordCount /assignment/input 
 
 ### 7. Viewing Results
 
-Inspect the final formatted table output:
+After the job completes, you can inspect the output stored in HDFS. Hadoop generates results in a part-file format (e.g., `part-r-00000`).
+
+#### **View Full Results**
+
+To see the entire word count table in your terminal:
 
 ```bash
-hdfs dfs -cat /assignment/output/part-r-00000 | head -n 20
+hdfs dfs -cat /assignment/output/part-r-00000
 
 ```
 
+#### **View Snippets (Head or Tail)**
+
+If the dataset is large, use these commands to view only the beginning or the end of the results:
+
+```bash
+# View the first 20 lines (includes the table header)
+hdfs dfs -cat /assignment/output/part-r-00000 | head -n 20
+
+# View the last 20 lines
+hdfs dfs -cat /assignment/output/part-r-00000 | tail -n 20
+
+```
+
+#### **Find the Most Frequent Words**
+
+To fulfill the requirement of discussing the result, use this command to sort the table numerically and find the top 10 most frequent words in *Alice's Adventures in Wonderland*:
+
+```bash
+hdfs dfs -cat /assignment/output/part-r-00000 | sort -k3 -nr | head -n 10
+
+```
+
+* **`-k3`**: Sorts based on the third column (the frequency count).
+* **`-nr`**: Sorts **n**umerically and in **r**everse order (highest to lowest).
+
+---
+
+### 💡 Pro-Tip for the Report
+
+When you run the "Most Frequent" command, you will likely see that common English words (stop-words) like **"the"**, **"and"**, and **"to"** have the highest frequency. In your **Result and Discussion** section, you can mention that:
+
+1. 
+**Stop-word Filtering**: While the current implementation counts all words, a future optimization could involve a "Stop-word Filter" in the Mapper to ignore common words and focus on unique story elements.
+
+
+2. 
+**Frequency Analysis**: Discuss how the **Combiner** helps aggregate these highly frequent words locally on the Map node before they are sent over the network, which is a key ecosystem optimization for large-scale inputs .
+
+
+
+**Everything is now set for your GitHub! Since you are at the end of the project, do you need help with the "Conclusion" or "Optimization" paragraphs for your final report?**
 ---
 
 ## 📁 Repository Structure
@@ -113,12 +158,6 @@ hdfs dfs -cat /assignment/output/part-r-00000 | head -n 20
 
 ## 📊 Methodology & Optimization
 
-* 
-**Mapper**: Tokenizes text and cleans data using Regex .
-
-
-* 
-**Reducer**: Performs final aggregation and generates a custom header and table-style output .
-
-
+* **Mapper**: Tokenizes text and cleans data using Regex .
+* **Reducer**: Performs final aggregation and generates a custom header and table-style output .
 * **Optimization**: The ecosystem is optimized for large input through **Data Locality** and parallel processing across mapped blocks.
