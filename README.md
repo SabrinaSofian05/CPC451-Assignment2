@@ -123,19 +123,12 @@ hdfs dfs -cat /assignment/output/part-r-00000 | sort -k3 -nr | head -n 10
 ---
 
 ### 💡 Pro-Tip for the Report
-
 When you run the "Most Frequent" command, you will likely see that common English words (stop-words) like **"the"**, **"and"**, and **"to"** have the highest frequency. In your **Result and Discussion** section, you can mention that:
 
-1. 
-**Stop-word Filtering**: While the current implementation counts all words, a future optimization could involve a "Stop-word Filter" in the Mapper to ignore common words and focus on unique story elements.
+1. **Stop-word Filtering**: While the current implementation counts all words, a future optimization could involve a "Stop-word Filter" in the Mapper to ignore common words and focus on unique story elements.
 
+2. **Frequency Analysis**: Discuss how the **Combiner** helps aggregate these highly frequent words locally on the Map node before they are sent over the network, which is a key ecosystem optimization for large-scale inputs.
 
-2. 
-**Frequency Analysis**: Discuss how the **Combiner** helps aggregate these highly frequent words locally on the Map node before they are sent over the network, which is a key ecosystem optimization for large-scale inputs .
-
-
-
-**Everything is now set for your GitHub! Since you are at the end of the project, do you need help with the "Conclusion" or "Optimization" paragraphs for your final report?**
 ---
 
 ## 📁 Repository Structure
