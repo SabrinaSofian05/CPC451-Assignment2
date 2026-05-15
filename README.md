@@ -20,6 +20,15 @@ This repository contains the implementation of a **Basic Word Count** program us
 
 ## 🚀 Execution Guideline
 
+### 1. Install Apache Maven
+
+```bash
+sudo apt update
+sudo apt install maven
+mvn -version
+
+```
+
 ### 1. Create the Project Directory
 
 To keep the assignment separate from previous lab work, create a fresh workspace:
@@ -30,6 +39,24 @@ mkdir -p Assignment2/src/main/java/com/assignment
 cd Assignment2
 
 ```
+### 3. Configure the Project (`pom.xml`)
+
+```bash
+nano pom.xml
+
+```
+
+*Paste the Maven configuration and save (**Ctrl+O, Enter, Ctrl+X**).*
+
+### 4. Implement the MapReduce Code
+
+```bash
+nano src/main/java/com/assignment/WordCount.java
+
+```
+
+*Paste the Java code (Mapper, Reducer, and Driver) and save (**Ctrl+O, Enter, Ctrl+X**).*
+
 
 ### 2. Environment Setup
 
@@ -70,6 +97,16 @@ wget https://www.gutenberg.org/files/11/11-0.txt -O assignment_data.txt
 # Upload to HDFS
 hdfs dfs -mkdir -p /assignment/input
 hdfs dfs -put assignment_data.txt /assignment/input/
+
+```
+
+### 6. Preparation: Cleanup Before Running
+
+**CRITICAL:** Hadoop will throw an error if the output directory already exists. If you are rerunning the job after making changes to your code, you **must** delete the previous output folder:
+
+```bash
+# Delete the existing output directory in HDFS
+hdfs dfs -rm -r /assignment/output
 
 ```
 
@@ -122,6 +159,17 @@ hdfs dfs -cat /assignment/output/part-r-00000 | sort -k3 -nr | head -n 10
 
 ---
 
+### 9. Shutdown Services
+
+To properly close your environment and save VM resources:
+
+```bash
+stop-yarn.sh
+stop-dfs.sh
+
+```
+---
+
 ### 💡 Pro-Tip for the Report
 When you run the "Most Frequent" command, you will likely see that common English words (stop-words) like **"the"**, **"and"**, and **"to"** have the highest frequency. In your **Result and Discussion** section, you can mention that:
 
@@ -154,3 +202,58 @@ When you run the "Most Frequent" command, you will likely see that common Englis
 * **Mapper**: Tokenizes text and cleans data using Regex .
 * **Reducer**: Performs final aggregation and generates a custom header and table-style output .
 * **Optimization**: The ecosystem is optimized for large input through **Data Locality** and parallel processing across mapped blocks.
+
+---
+
+
+
+
+
+
+
+### 5. Start Hadoop Services
+
+```bash
+start-dfs.sh
+start-yarn.sh
+jps
+
+```
+
+### 6. Preparation: Cleanup Before Running
+
+**CRITICAL:** Hadoop will throw an error if the output directory already exists. If you are rerunning the job after making changes to your code, you **must** delete the previous output folder:
+
+```bash
+# Delete the existing output directory in HDFS
+hdfs dfs -rm -r /assignment/output
+
+```
+
+### 7. Compile and Execute
+
+```bash
+# Build the JAR
+mvn clean package
+
+# Ingest data
+wget https://www.gutenberg.org/files/11/11-0.txt -O assignment_data.txt
+hdfs dfs -mkdir -p /assignment/input
+hdfs dfs -put assignment_data.txt /assignment/input/
+
+# Run the job
+hadoop jar target/word-count-1.0.jar com.assignment.WordCount /assignment/input /assignment/output
+
+```
+
+### 8. View and Analyze Results
+
+```bash
+# View formatted table
+hdfs dfs -cat /assignment/output/part-r-00000 | head -n 20
+
+# View top 10 most frequent words
+hdfs dfs -cat /assignment/output/part-r-00000 | sort -k3 -nr | head -n 10
+
+```
+
