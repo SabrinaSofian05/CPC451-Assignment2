@@ -10,10 +10,7 @@ This repository contains the implementation of a **Basic Word Count** program us
 
 ## 🛠️ Tech Stack & Requirements
 
-* 
-**Operating System**: Ubuntu Linux (via VMware) 
-
-
+* **Operating System**: Ubuntu Linux (via VMware) 
 * **Framework**: Apache Hadoop 3.3.6
 * **Language**: Java (JDK 8)
 * **Build Tool**: Apache Maven
