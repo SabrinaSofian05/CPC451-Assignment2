@@ -2,9 +2,9 @@
 
 ## 📌 Project Overview
 
-This repository contains the implementation of a **Basic Word Count** program using the **Hadoop MapReduce** framework. The goal of this project is to process unstructured text data, perform word frequency analysis, and output the results in a formatted table .
+This repository contains the implementation of a **Basic Word Count** program using the **Hadoop MapReduce** framework. The system processes unstructured text data, performs word frequency analysis, and outputs the results in a formatted table .
 
-The system is tested using **"Alice's Adventures in Wonderland"** by Lewis Carroll, sourced from Project Gutenberg.
+> **Important:** Before proceeding, ensure you have completed the environment configuration as specified in **Lab 1 (Single-Node Setup)** and **Lab 2 (Maven Integration)**.
 
 ---
 
@@ -15,10 +15,7 @@ The system is tested using **"Alice's Adventures in Wonderland"** by Lewis Carro
 
 
 * **Framework**: Apache Hadoop 3.3.6
-* 
-**Language**: Java (JDK 8) 
-
-
+* **Language**: Java (JDK 8)
 * **Build Tool**: Apache Maven
 * **Dataset**: [Alice's Adventures in Wonderland](https://www.gutenberg.org/files/11/11-0.txt)
 
@@ -26,28 +23,46 @@ The system is tested using **"Alice's Adventures in Wonderland"** by Lewis Carro
 
 ## 🚀 Execution Guideline
 
-### 1. Environment Setup
+### 1. Create the Project Directory
 
-Ensure your Hadoop services are running before starting the job:
+To keep the assignment separate from previous lab work, create a fresh workspace:
+
+```bash
+cd ~
+mkdir -p Assignment2/src/main/java/com/assignment
+cd Assignment2
+
+```
+
+### 2. Environment Setup
+
+Start the core Hadoop services to enable the HDFS and YARN frameworks:
 
 ```bash
 start-dfs.sh
 start-yarn.sh
-# Verify services using 'jps'
+# Check that NameNode, DataNode, and ResourceManager are active
 jps
 
 ```
 
-### 2. Project Compilation
+### 3. Access the Web UI
 
-Navigate to the project directory and build the JAR file using Maven:
+Monitor your cluster and job progress via your browser inside the Ubuntu VM:
+
+* **HDFS (NameNode Status)**: `http://localhost:9870`
+* **YARN (Resource Manager)**: `http://localhost:8088`
+
+### 4. Project Compilation
+
+Build the JAR file using Maven to package your Java classes:
 
 ```bash
 mvn clean package
 
 ```
 
-### 3. Data Ingestion
+### 5. Data Ingestion
 
 Download the dataset and upload it to the **Hadoop Distributed File System (HDFS)** :
 
@@ -61,47 +76,23 @@ hdfs dfs -put assignment_data.txt /assignment/input/
 
 ```
 
-### 4. Running the Job
+### 6. Running the Job
 
-Execute the MapReduce job using the generated JAR:
+Execute the MapReduce job. The YARN UI will track this application in real-time:
 
 ```bash
 hadoop jar target/word-count-1.0.jar com.assignment.WordCount /assignment/input /assignment/output
 
 ```
 
-### 5. Viewing Results
+### 7. Viewing Results
 
-View the formatted table output:
+Inspect the final formatted table output:
 
 ```bash
 hdfs dfs -cat /assignment/output/part-r-00000 | head -n 20
 
 ```
-
----
-
-## 📊 MapReduce Flow & Optimization
-
-The project follows the standard MapReduce lifecycle to handle large-scale data input efficiently:
-
-1. 
-**Mapper**: Tokenizes the input text, cleans punctuation via Regex, and emits `(word, 1)` pairs .
-
-
-2. **Shuffle & Sort**: Hadoop automatically groups intermediate keys to ensure all instances of a word reach the same reducer.
-3. 
-**Reducer**: Aggregates the counts and applies a custom table-style formatting for the final output .
-
-
-
-### Ecosystem Optimizations
-
-* **Data Locality**: Map tasks are scheduled on nodes containing the data blocks to minimize network congestion.
-* 
-**Combiner (Optional)**: In high-volume scenarios, a Combiner can be utilized as a "Local Reducer" to minimize the data sent over the network during the shuffle phase .
-
-
 
 ---
 
@@ -114,8 +105,8 @@ The project follows the standard MapReduce lifecycle to handle large-scale data 
 │       └── java
 │           └── com
 │               └── assignment
-│                   └── WordCount.java  # Main Java Source Code
-├── pom.xml                             # Maven Dependencies
+│                   └── WordCount.java  # Main Source Code with Table Formatting
+├── pom.xml                             # Maven Dependencies (Hadoop 3.3.6)
 ├── assignment_data.txt                 # Input Dataset (Alice in Wonderland)
 └── README.md                           # Documentation
 
@@ -123,6 +114,14 @@ The project follows the standard MapReduce lifecycle to handle large-scale data 
 
 ---
 
-### Pro-Tip for your GitHub:
+## 📊 Methodology & Optimization
 
-Include a screenshot of your **YARN Web UI (localhost:8088)** showing the `SUCCEEDED` status of your application. This provides visual proof that your "Flow" was successfully executed by the Hadoop resource manager.
+* 
+**Mapper**: Tokenizes text and cleans data using Regex .
+
+
+* 
+**Reducer**: Performs final aggregation and generates a custom header and table-style output .
+
+
+* **Optimization**: The ecosystem is optimized for large input through **Data Locality** and parallel processing across mapped blocks.
