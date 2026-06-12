@@ -15,7 +15,7 @@ import java.io.IOException;
  * WordCount Implementation for Hadoop MapReduce.
  * Processes text files to count word frequencies and outputs results in a formatted table. [cite: 191, 192]
  */
-public class WordCount {
+public class WordCountOriginal {
 
     /**
      * MAPPER CLASS
