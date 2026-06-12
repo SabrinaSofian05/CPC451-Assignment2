@@ -1,0 +1,186 @@
+# ==========================================
+# Articles
+# ==========================================
+a
+an
+the
+
+# ==========================================
+# Pronouns
+# ==========================================
+i
+me
+my
+myself
+we
+our
+ours
+ourselves
+you
+your
+yours
+yourself
+yourselves
+he
+him
+his
+himself
+she
+her
+hers
+herself
+it
+its
+itself
+they
+them
+their
+theirs
+themselves
+
+# ==========================================
+# Auxiliary / Helping Verbs
+# ==========================================
+am
+is
+are
+was
+were
+be
+been
+being
+have
+has
+had
+do
+does
+did
+can
+could
+may
+might
+must
+shall
+should
+will
+would
+
+# ==========================================
+# Prepositions
+# ==========================================
+about
+above
+across
+after
+against
+along
+among
+around
+at
+before
+behind
+below
+beneath
+beside
+between
+beyond
+by
+down
+during
+for
+from
+in
+into
+near
+of
+off
+on
+over
+through
+to
+under
+until
+up
+with
+
+# ==========================================
+# Conjunctions
+# ==========================================
+and
+but
+or
+nor
+so
+yet
+because
+although
+while
+if
+than
+
+# ==========================================
+# Demonstratives & Determiners
+# ==========================================
+this
+that
+these
+those
+all
+any
+both
+each
+few
+more
+most
+other
+some
+such
+
+# ==========================================
+# Question Words
+# ==========================================
+what
+when
+where
+which
+who
+whom
+why
+how
+
+# ==========================================
+# Adverbs
+# ==========================================
+again
+just
+once
+only
+out
+same
+then
+there
+too
+very
+now
+
+# ==========================================
+# Common Literary / Narrative Words
+# Added for Content Word Analysis
+# ==========================================
+said
+say
+says
+see
+know
+think
+thought
+look
+looked
+looking
+went
+come
+came
+go
+going
+got
+began
